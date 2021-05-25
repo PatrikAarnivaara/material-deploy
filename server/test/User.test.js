@@ -1,7 +1,7 @@
 import Chai from 'chai';
 import ChaiHTTP from 'chai-http';
 import { describe, it as test } from 'mocha';
-import server from '../Server.js'
+import server from '../index.js'
 
 Chai.should()
 Chai.use(ChaiHTTP)

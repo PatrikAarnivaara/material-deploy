@@ -6,7 +6,6 @@
   "scripts": {
     "heroku-postbuild": "cd server && npm install && npm run install-frontend && npm run build-frontend",
     "start": "cd server && node index.js",
-    "build": "set INLINE_RUNTIME_CHUNK=false&&react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

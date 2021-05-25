@@ -25,8 +25,8 @@ EquipmentRoutes.routes(server);
 server.use(Middlewares.notFound);
 
 /* if (process.env.NODE_ENV === 'production') { */
-    server.use(express.static("../client/build"));
-    server.get("/*", (req, res) => {
+    server.use(express.static("client/build"));
+    server.get("*", (req, res) => {
         res.sendFile("../client/build/index.html");
     });
 /* } */
