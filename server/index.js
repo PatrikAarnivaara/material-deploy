@@ -24,12 +24,12 @@ UserRoutes.routes(server);
 EquipmentRoutes.routes(server);
 server.use(Middlewares.notFound);
 
-/* if (process.env.NODE_ENV === 'production') { */
+if (process.env.NODE_ENV === 'production') {
     server.use(express.static("client/build"));
     server.get("*", (req, res) => {
         res.sendFile("../client/build/index.html");
     });
-/* } */
+}
 
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
