@@ -1,0 +1,18 @@
+{
+  "name": "material-dpl",
+  "version": "1.0.0",
+  "description": "material-dpl",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "cd server && npm install && npm run install-frontend && npm run build-frontend",
+    "start": "cd server && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+  ,
+  "engines": {
+    "node": "14.x"
+  }
+}
