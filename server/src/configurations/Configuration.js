@@ -3,18 +3,18 @@ import mongoose from 'mongoose';
 
 dotenv.config()
 const { DEV_DATABASE_URL,
-    PROD_DATABASE_URL,
+    PROD_DATABASE_URL, PORT,
     ENVIRONMENT } = process.env
 
-const connectToPort = async (server) => {
-    try {
-        await server.listen(process.env.PORT || 3001, () => {
-            console.log(`✔️ SERVER RUNNING ON ${3001}`);
-        })
-    } catch (error) {
-        console.error(`❌  ERROR OCCURED WHILE CONNECTING TO ${3001}`)
+    const connectToPort = async (server) => {
+        try {
+            await server.listen(PORT || 3001, () => {
+                console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT || 3001}`)
+            })
+        } catch (error) {
+            console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
+        }
     }
-}
 
 const connectToDatabase = async () => {
     const DATABASE_URL = ENVIRONMENT === 'DEVELOPMENT' ? DEV_DATABASE_URL : PROD_DATABASE_URL

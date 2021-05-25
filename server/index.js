@@ -17,7 +17,7 @@ server.use(morgan('common'));
 server.use(helmet());
 server.use(cors({ credential: true }));
 
-passportConfig.registerUserini()
+/* passportConfig.registerUserini() */
 passportConfig.login()
 
 UserRoutes.routes(server);
