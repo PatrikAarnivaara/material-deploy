@@ -1,0 +1,36 @@
+{
+  "name": "material-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build-frontend": "cd ../client && npm run build",
+    "install-frontend": "cd ../client && npm install",
+    "test": "mocha 'test/**'"
+  },
+  "keywords": [
+    "RestAPI"
+  ],
+  "author": "patrikaarnivaara@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.25.0",
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.7"
+  }
+}
