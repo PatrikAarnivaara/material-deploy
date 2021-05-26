@@ -22,7 +22,7 @@ passportConfig.login()
 
 UserRoutes.routes(server);
 EquipmentRoutes.routes(server);
-server.use(Middlewares.notFound);
+/* server.use(Middlewares.notFound); */
 
 
 Configurations.connectToPort(server);
