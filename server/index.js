@@ -28,7 +28,7 @@ EquipmentRoutes.routes(server);
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
 
-if (process.env.ENVIRONMENT === 'production') {
+if (process.env.NODE_ENV === 'production') {
     server.use(express.static("../client/build"));
     server.get("/*", (req, res) => {
         res.sendFile("/client/build/index.html");
