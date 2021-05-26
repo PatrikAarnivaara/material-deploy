@@ -8,8 +8,8 @@ const { DEV_DATABASE_URL,
 
     const connectToPort = async (server) => {
         try {
-            await server.listen(PORT || 3001, () => {
-                console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT || 3001}`)
+            await server.listen(PORT, () => {
+                console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT}`)
             })
         } catch (error) {
             console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
