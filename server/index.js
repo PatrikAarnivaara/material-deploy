@@ -22,16 +22,17 @@ passportConfig.login()
 
 UserRoutes.routes(server);
 EquipmentRoutes.routes(server);
-server.use(Middlewares.notFound);
-
-/* if (process.env.NODE_ENV === 'production') {
-    server.get("*", (req, res) => {
-        res.sendFile("../client/build/index.html");
-    });
-} */
+/* server.use(Middlewares.notFound);
+ */
 
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
 
+
+server.get("*", (req, res) => {
+    res.sendFile("../client/build/index.html");
+});
 server.use(express.static("../client/build"));
+
+
 export default server;
