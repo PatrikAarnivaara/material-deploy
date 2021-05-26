@@ -29,10 +29,12 @@ Configurations.connectToPort(server);
 Configurations.connectToDatabase();
 
 
-server.use(express.static("../client/build"));
-server.get("*", (req, res) => {
-    res.sendFile("/client/build/index.html");
-});
+if (process.env.NODE_ENV === 'production') {
+    server.use(express.static("../client/build"));
+    server.get("*", (req, res) => {
+        res.sendFile("/client/build/index.html");
+    });
+}
 
 
 export default server;
