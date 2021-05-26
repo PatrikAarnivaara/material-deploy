@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-/* import helmet from 'helmet'; */
+import helmet from 'helmet';
 import cors from 'cors'
 import passport from 'passport'
 
@@ -14,7 +14,7 @@ const server = express();
 server.use(express.json());
 server.use(passport.initialize())
 server.use(morgan('common'));
-/* server.use(helmet()); */
+server.use(helmet());
 server.use(cors({ credential: true }));
 
 /* passportConfig.registerUserini() */
@@ -28,13 +28,11 @@ EquipmentRoutes.routes(server);
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
 
-
-if (process.env.NODE_ENV === 'production') {
+if (process.env.ENVIRONMENT === 'production') {
     server.use(express.static("../client/build"));
     server.get("/*", (req, res) => {
         res.sendFile("/client/build/index.html");
     });
 }
-
 
 export default server;
