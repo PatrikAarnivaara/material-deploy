@@ -22,8 +22,8 @@ passportConfig.login()
 
 UserRoutes.routes(server);
 EquipmentRoutes.routes(server);
-server.use(Middlewares.notFound);
-
+/* server.use(Middlewares.notFound);
+ */
 
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
@@ -31,7 +31,7 @@ Configurations.connectToDatabase();
 
 server.use(express.static("../client/build"));
 server.get("*", (req, res) => {
-    res.sendFile("index.html");
+    res.sendFile("/client/build/index.html");
 });
 
 
