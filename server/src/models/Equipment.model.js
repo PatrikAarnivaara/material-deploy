@@ -17,7 +17,7 @@ const equipmentSchema = Schema({
     },
     serialnumber: {
         type: String, unique: true, allowNull: false, required: true,
-        minlength: [5, 'serial number needs to be 10 characters long']
+        minlength: [10, 'serial number needs to be 10 characters long']
     },
     category: {
         type: String, allowNull: false, required: true,

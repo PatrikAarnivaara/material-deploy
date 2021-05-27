@@ -28,13 +28,13 @@ const createEquipment = async (request, response) => {
 
 const updateEquipment = async (request, response) => {
 
-    const data = new EquipmentModel({
+    const data = {
         title: request.body.title,
         description: request.body.description,
         brand: request.body.brand,
         serialnumber: request.body.serialnumber,
         category: request.body.category
-    })
+    }
 
     try {
         const databaseResponse = await EquipmentModel.findByIdAndUpdate(request.params.equipmentId, data, { new: true, useFindAndModify: false })
