@@ -56,7 +56,9 @@ export const RegisterUserView = () => {
     const [newUser, setNewUser] = useState<RegisterUserProps>(initialState)
     const [confirmCreateUser, setConfirmCreateUser] = useState<string>('')
 
-    const registerUser = async () => {
+    const registerUser = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        
         try {
             const { data } = await UserAPIService.createUser(newUser)
             if (data) {
@@ -79,7 +81,7 @@ export const RegisterUserView = () => {
 
     return (
         <RegisterWrapper>
-            <RegisterForm onSubmit={() => registerUser()} >
+            <RegisterForm onSubmit={(event) => registerUser(event)} >
                 <input type='text' required placeholder="first name" onChange={event => handleChange(event, 'firstname')} />
                 <input type='text' required placeholder="last name" onChange={event => handleChange(event, 'lastname')} />
                 <input type='text' required placeholder="school class" onChange={event => handleChange(event, 'schoolclass')} />
