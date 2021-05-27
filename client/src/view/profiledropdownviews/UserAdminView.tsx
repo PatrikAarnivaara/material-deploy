@@ -36,7 +36,7 @@ export const UserAdminView = () => {
 
 	const displayUserTable = () => {
 		if (users) {
-			return <Table list={users} />
+			return <Table list={users} setUsers={setUsers}/>
 		} else {
 			return <h2>LOADING</h2>
 		}

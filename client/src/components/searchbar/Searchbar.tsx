@@ -1,3 +1,5 @@
+/** @format */
+
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserProps } from "../../shared/types/UserProps";
@@ -23,8 +25,6 @@ export const Searchbar: React.FC<SearchbarProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-
-  console.log(list)
 
   useEffect(() => {
     const results: Array<UserProps> = list?.filter((item) => {
