@@ -15,7 +15,7 @@ server.use(express.json());
 server.use(passport.initialize())
 server.use(morgan('common'));
 server.use(helmet());
-server.use(cors({ credentials: true }));
+server.use(cors({ credential: true }));
 
 /* passportConfig.registerUserini() */
 passportConfig.login()
