@@ -14,17 +14,36 @@ const createEquipment = async (request, response) => {
     })
 
     try {
-        const user = await UserModel.findById({ _id: request.body.userId })
+        /* const user = await UserModel.findById({ _id: request.body.userId })
         user.loans.push(equipment);
-        equipment.currentlyLoanedByUser = user
-        /* await equipment.save() */
-        const saveEquipment = await user.save()
+        equipment.currentlyLoanedByUser = ""
+        await equipment.save()
+        const saveEquipment = await user.save() */
         const databaseResponse = await equipment.save()
         response.status(StatusCode.CREATED).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
     }
 }
+
+const updateEquipment = async (request, response) => {
+
+    const data = new EquipmentModel({
+        title: request.body.title,
+        description: request.body.description,
+        brand: request.body.brand,
+        serialnumber: request.body.serialnumber,
+        category: request.body.category
+    })
+
+    try {
+        const databaseResponse = await EquipmentModel.findByIdAndUpdate(request.params.equipmentId, data, { new: true, useFindAndModify: false })
+        response.status(StatusCode.OK).send(databaseResponse)
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
+    }
+}
+
 
 const getEquipment = async (request, response) => {
     try {
@@ -48,5 +67,6 @@ const deleteEquipment = async (request, response) => {
 export default {
     getEquipment,
     createEquipment,
+    updateEquipment,
     deleteEquipment
 }
