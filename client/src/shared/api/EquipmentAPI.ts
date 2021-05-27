@@ -1,10 +1,10 @@
 import Axios from 'axios'
 
-const productionAPI = 'https://thawing-mountain-25749.herokuapp.com/'
-const developmentAPI = 'http://localhost:3001'
+/* const productionAPI = 'https://thawing-mountain-25749.herokuapp.com/'
+ */const developmentAPI = 'http://localhost:3001'
 
 const EquipmentAPI = Axios.create({
-    baseURL: productionAPI,
+    baseURL: developmentAPI,
     headers: { 'Content-Type': 'application/json' }
 })
 

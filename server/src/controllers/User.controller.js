@@ -27,18 +27,18 @@ const createUser = async (request, response) => {
     }
 }
 
-const getUsers = async (request, response) => {
+const getUser = async (request, response) => {
     try {
-        const databaseResponse = await UserModel.find()
+        const databaseResponse = await UserModel.find({ _id: request.params.userId }).populate('loans')
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
     }
 }
 
-const getUser = async (request, response) => {
+const getUsers = async (request, response) => {
     try {
-        const databaseResponse = await UserModel.find({ _id: request.params.userId }).populate('loans')
+        const databaseResponse = await UserModel.find()
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })

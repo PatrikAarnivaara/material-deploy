@@ -4,12 +4,12 @@ const { Schema } = mongoose;
 const equipmentSchema = Schema({
     title: {
         type: String, required: true, allowNull: false,
-        minlength: [5, 'username must be longer than 5 characters'],
+        minlength: [4, 'username must be longer than 5 characters'],
         maxlength: [20, 'username cannot be longer than 20 characters']
     },
     description: {
         type: String, required: true, allowNull: false,
-        minlength: [10, 'description must be longer than 20 characters']
+        minlength: [10, 'description must be longer than 10 characters']
     },
     brand: {
         type: String, required: true, allowNull: false,
@@ -17,7 +17,7 @@ const equipmentSchema = Schema({
     },
     serialnumber: {
         type: String, unique: true, allowNull: false, required: true,
-        minlength: [5, 'serial number needs to be 10 characters long']
+        minlength: [10, 'serial number needs to be 10 characters long']
     },
     category: {
         type: String, allowNull: false, required: true,
@@ -26,7 +26,7 @@ const equipmentSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     }
-})
+}, { timestamps: true })
 
 const EquipmentModel = mongoose.model('equipment', equipmentSchema)
 export default EquipmentModel;

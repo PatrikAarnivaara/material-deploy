@@ -8,7 +8,7 @@ import styled from 'styled-components';
 export const MyLoanWrapper = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 300px);;
-	grid-column-gap: 1em;
+	grid-gap: 1em;
 	max-width: 1124px;
 	margin: auto;
 	padding: 1em;
