@@ -46,7 +46,7 @@ export const Table = (props: { list: Array<UserProps> }) => {
                         item.email}</td>
                 <td >
                     <EditButton id={item._id} editId={edit} active={active} setActive={setActive} setInput={setInput} setEdit={setEdit} input={input} setSearchResults={setSearchResults}/>
-                    <DeleteButton id={item._id} editId={edit} active={active} setActive={setActive} setEdit={setEdit} /></td>
+                    <DeleteButton id={item._id} editId={edit} active={active} setActive={setActive} setEdit={setEdit} setSearchResults={setSearchResults}/></td>
             </tr>
         )))
     }
