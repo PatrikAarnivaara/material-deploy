@@ -10,6 +10,7 @@ export const UserAdminViewWrapper = styled.div`
 	height: 100vh;
 	padding: 1em;
 	`
+
 /* UserAdminView */
 export const UserAdminView = () => {
 	const [users, setUsers] = useState<UserProps[]>();

@@ -15,7 +15,7 @@ server.use(express.json());
 server.use(passport.initialize())
 server.use(morgan('common'));
 server.use(helmet());
-server.use(cors({ credential: true }));
+server.use(cors({ credentials: true }));
 
 /* passportConfig.registerUserini() */
 passportConfig.login()
@@ -23,7 +23,6 @@ passportConfig.login()
 UserRoutes.routes(server);
 EquipmentRoutes.routes(server);
 /* server.use(Middlewares.notFound); */
-
 
 Configurations.connectToPort(server);
 Configurations.connectToDatabase();
