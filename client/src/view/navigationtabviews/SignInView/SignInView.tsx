@@ -5,7 +5,7 @@ import { UserContext } from "../../../shared/provider/UserProvider";
 import { useHistory } from "react-router-dom";
 import {
   SignInViewWrapper,
-  SignInViewInput,
+  SignInViewForm,
   RegisterForgotPasswordWrapper,
   Register,
   ForgotPassword,
@@ -32,7 +32,8 @@ export const SignInView = (): JSX.Element => {
     });
   };
 
-  const signIn = async () => {
+  const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { data } = await UserAPIService.loginUser(userCredentials);
     localStorage.setItem(LocalStorage.authenticationToken, data.token);
 
@@ -47,7 +48,7 @@ export const SignInView = (): JSX.Element => {
 
   return (
     <SignInViewWrapper>
-      <SignInViewInput>
+      <SignInViewForm onSubmit={(event) => signIn(event)}>
         <input
           type='text'
           placeholder='username'
@@ -59,8 +60,8 @@ export const SignInView = (): JSX.Element => {
           placeholder='password'
           onChange={(event) => handleUserCredentials(event, "password")}
         />
-        <button onClick={(event) => signIn(event)}>sign in</button>
-      </SignInViewInput>
+        <input type='submit' value='Sign in' />
+      </SignInViewForm>
       <RegisterForgotPasswordWrapper>
         <Register onClick={() => history.push(RoutingPath.registerUserView)}>
           Register

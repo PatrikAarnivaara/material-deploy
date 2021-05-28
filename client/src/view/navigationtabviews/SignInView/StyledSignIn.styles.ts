@@ -11,7 +11,7 @@ export const SignInViewWrapper = styled.div`
 	height: 100vh;
 `;
 
-export const SignInViewInput = styled.form`
+export const SignInViewForm = styled.form`
 	width: 300px;
 	padding: 20px;
 	margin: auto;
@@ -23,7 +23,6 @@ export const SignInViewInput = styled.form`
 		'inputPassword inputPassword'
 		'button button';
 	input {
-		/* border: none; */
 		padding:10px;
   		border:0;
   		box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
@@ -36,7 +35,7 @@ export const SignInViewInput = styled.form`
 	input[type=password] {
 		grid-area: inputPassword;
 	}
-	button {
+	input[type=submit] {
 		grid-area: button;
 		cursor: pointer;
 		border: 1px solid #640EB0;
@@ -50,7 +49,7 @@ export const SignInViewInput = styled.form`
 		transition: transform 80ms ease-in;
 	}
 
-	button:active {
+	/* button:active {
 		transform: scale(0.95);
 	}
 
@@ -61,7 +60,7 @@ export const SignInViewInput = styled.form`
 	button.ghost {
 		background-color: transparent;
 		border-color: #ffffff;
-	}
+	} */
 `;
 
 export const RegisterForgotPasswordWrapper = styled.div`
