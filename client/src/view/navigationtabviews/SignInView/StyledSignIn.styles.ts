@@ -11,7 +11,7 @@ export const SignInViewWrapper = styled.div`
 	height: 100vh;
 `;
 
-export const SignInViewInput = styled.section`
+export const SignInViewInput = styled.form`
 	width: 300px;
 	padding: 20px;
 	margin: auto;
@@ -30,10 +30,10 @@ export const SignInViewInput = styled.section`
 		padding: 12px 15px;
 		margin: 8px 0;
 	}
-	.input-user {
+	input[type=text] {
 		grid-area: inputUser;
 	}
-	.input-password {
+	input[type=password] {
 		grid-area: inputPassword;
 	}
 	button {

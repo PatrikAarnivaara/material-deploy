@@ -1,10 +1,26 @@
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import bcrypt from 'bcrypt'
+
 import UserModel from '../models/User.model.js';
 import StatusCode from '../configurations/StatusCode.js'
 
 /* TODO: remove error logs */
+
+const testingAuthenticatedRoute = async (request, response) => {
+	jwt.verify(request.token, 'jwtSecret.secret', (error, authorizedData) => {
+		if (error) {
+			//If error send Forbidden (403)
+			response.status(StatusCode.FORBIDDEN).send({ message: `error: ${error}` })
+		} else {
+			//If token is successfully verified, we can send the autorized data 
+			response.json({
+				message: 'Successful log in',
+				authorizedData
+			})
+		}
+	})
+}
 
 const createUser = async (request, response) => {
     try {
@@ -121,5 +137,6 @@ export default {
     updateUser,
     loginUser,
     queryUser,
-    deleteUser
+    deleteUser,
+    testingAuthenticatedRoute
 }

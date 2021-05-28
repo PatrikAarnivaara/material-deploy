@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../shared/provider/UserProvider';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import LocalStorage from '../shared/cache/LocalStorage'
 import { MyLoanView } from '../view/navigationtabviews/MyLoanView';
 import { EquipmentView } from '../view/navigationtabviews/EquipmentView';
 import { EquipmentAdminView } from '../view/profiledropdownviews/EquipmentAdminView'
@@ -16,20 +17,12 @@ import UserAPIService from '../shared/api/service/UserAPIService';
 export const Routes = (props: { children?: React.ReactChild }) => {
 	const [authenticatedUser, setAuthenticatedUser] = useContext(UserContext);
 	
-	const unAuthenticated = (navigateToViewIfAuthenticated: React.FC) => {
-		if (authenticatedUser.authenticated) {
-			return HomeView;
-		} else {
-			return navigateToViewIfAuthenticated;
-		}
+	const blockRouteIfUserIsSignedIn = (navigateToViewIfAuthenticated: React.FC) => {
+		return authenticatedUser.authenticated ? HomeView : navigateToViewIfAuthenticated
 	};
 
 	const authenticated = (navigateToViewIfAuthenticated: React.FC) => {
-		if (authenticatedUser.authenticated) {
-			return navigateToViewIfAuthenticated;
-		} else {
-			return SignInView;
-		}
+		return authenticatedUser.authenticated ? navigateToViewIfAuthenticated : SignInView
 	};
 
 	const validateToken = (tokenExp: number) => {
@@ -37,33 +30,32 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 		return (tokenExp >= currentTime)
 	}
 	
-	useEffect(() => {
-		const parseJWT = async () => {
-			const token = localStorage.getItem('token')
-			if (!token) { return }
-			const base64Url = token.split('.')[1]
-			const base64 = base64Url.replace('-', '+').replace('_', '/')
-			const JWT = JSON.parse(window.atob(base64))
-			
-			if (validateToken(JWT.exp)) {
-				// TODO: There has to be a better way to recieve the username? You cannot just do a getUserWithID like this?
-				const { data } = await UserAPIService.getUser(JWT.id)
-				setAuthenticatedUser({
-					id: JWT.id,
-					authenticated: true,
-					username: data[0].username,
-				})
-			} else {
-				setAuthenticatedUser({
-					id: undefined,
-					authenticated: false,
-					username: undefined
-				})
-				localStorage.removeItem('token')
-			}
+	const parseJWT = async () => {
+		const token = localStorage.getItem(LocalStorage.authenticationToken)
+		if (!token) { return }
+		const base64Url = token.split('.')[1]
+		const base64 = base64Url.replace('-', '+').replace('_', '/')
+		const JWT = JSON.parse(window.atob(base64))
+		
+		if (validateToken(JWT.exp)) {
+			const response = await UserAPIService.getUser(JWT.id)
+			setAuthenticatedUser({
+				id: JWT.id,
+				authenticated: true,
+				username: response.data.username,
+			})
+		} else {
+			setAuthenticatedUser({
+				id: undefined,
+				authenticated: false,
+				username: undefined
+			})
+			localStorage.removeItem(LocalStorage.authenticationToken)
 		}
+	}
+	useEffect(() => {
 		parseJWT()
-	}, [setAuthenticatedUser]);
+	}, []);
 	
 
 	return (
@@ -72,7 +64,7 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 			<Switch>
 				<Route exact path={RoutingPath.myLoanView} component={authenticated(MyLoanView)} />
 				<Route exact path={RoutingPath.equipmentView} component={authenticated(EquipmentView)} />
-				<Route exact path={RoutingPath.signInView} component={unAuthenticated(SignInView)} />
+				<Route exact path={RoutingPath.signInView} component={blockRouteIfUserIsSignedIn(SignInView)} />
 				<Route exact path={RoutingPath.registerUserView} component={RegisterUserView} />
 				<Route exact path={RoutingPath.profileView} component={authenticated(ProfileView)} />
 				<Route exact path={RoutingPath.itemDetailView} component={authenticated(ItemDetailView)} />

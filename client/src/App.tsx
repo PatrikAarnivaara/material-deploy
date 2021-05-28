@@ -1,9 +1,11 @@
-import { Routes } from './routes/Routes';
-import { Navigation } from './components/navigation/Navigation';
-import { UserProvider } from './shared/provider/UserProvider';
-import { EquipmentProvider } from './shared/provider/EquipmentProvider'
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { myTheme } from './shared/Global/my-theme';
+/** @format */
+
+import { Routes } from "./routes/Routes";
+import { Navigation } from "./components/navigation/Navigation";
+import { UserProvider } from "./shared/provider/UserProvider";
+import { EquipmentProvider } from "./shared/provider/EquipmentProvider";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { myTheme } from "./shared/Global/my-theme";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -20,16 +22,16 @@ body {
 `;
 
 export const App = () => {
-	return (
-		<ThemeProvider theme={myTheme}>
-			<UserProvider>
-				<EquipmentProvider>
-					<GlobalStyle />
-					<Routes>
-						<Navigation />
-					</Routes>
-				</EquipmentProvider>
-			</UserProvider>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={myTheme}>
+      <EquipmentProvider>
+        <GlobalStyle />
+        <UserProvider>
+          <Routes>
+            <Navigation />
+          </Routes>
+        </UserProvider>
+      </EquipmentProvider>
+    </ThemeProvider>
+  );
 };
