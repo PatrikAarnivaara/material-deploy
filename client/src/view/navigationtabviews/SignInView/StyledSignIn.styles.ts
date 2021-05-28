@@ -11,7 +11,7 @@ export const SignInViewWrapper = styled.div`
 	height: 100vh;
 `;
 
-export const SignInViewInput = styled.section`
+export const SignInViewForm = styled.form`
 	width: 300px;
 	padding: 20px;
 	margin: auto;
@@ -23,20 +23,19 @@ export const SignInViewInput = styled.section`
 		'inputPassword inputPassword'
 		'button button';
 	input {
-		/* border: none; */
 		padding:10px;
   		border:0;
   		box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
 		padding: 12px 15px;
 		margin: 8px 0;
 	}
-	.input-user {
+	input[type=text] {
 		grid-area: inputUser;
 	}
-	.input-password {
+	input[type=password] {
 		grid-area: inputPassword;
 	}
-	button {
+	input[type=submit] {
 		grid-area: button;
 		cursor: pointer;
 		border: 1px solid #640EB0;
@@ -50,7 +49,7 @@ export const SignInViewInput = styled.section`
 		transition: transform 80ms ease-in;
 	}
 
-	button:active {
+	/* button:active {
 		transform: scale(0.95);
 	}
 
@@ -61,7 +60,7 @@ export const SignInViewInput = styled.section`
 	button.ghost {
 		background-color: transparent;
 		border-color: #ffffff;
-	}
+	} */
 `;
 
 export const RegisterForgotPasswordWrapper = styled.div`

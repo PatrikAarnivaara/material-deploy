@@ -1,33 +1,12 @@
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import passportLocal from 'passport-local'
-import UserModel from '../models/User.model.js'
 import passportJWT from 'passport-jwt'
+import UserModel from '../models/User.model.js'
 
 const localStrategy = passportLocal.Strategy
 const JWTstrategy = passportLocal.Strategy
 const { ExtractJwt } = passportJWT
-const BCRYPT_SALT_ROUNDS = 12
-
-const registerUserini = async () => {
-	passport.use('register',
-		new localStrategy(async (username, password, done) => {
-			try {
-				const user = await UserModel.findOne({ where: { username: username } })
-				if (user != null) {
-					return done(null, false, { message: 'username already taken' })
-				} else {
-					/* const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS) */
-					/* const createdUser = await UserModel.create({ username: username, password: hashedPassword }) */
-					done(null, true)
-				}
-			} catch (error) {
-				done(error)
-			}
-		},
-		),
-	)
-}
 
 const login = () => {
 	passport.use('login',
@@ -84,6 +63,5 @@ passport.use(
 )
 
 export default {
-	login,
-	registerUserini
+	login
 }

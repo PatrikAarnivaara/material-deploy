@@ -1,68 +1,74 @@
-import { useContext, useState } from 'react';
-import { UserContext } from '../../../shared/provider/UserProvider';
-import { useHistory } from 'react-router-dom';
-import { SignInViewWrapper, SignInViewInput, RegisterForgotPasswordWrapper, Register, ForgotPassword } from './StyledSignIn.styles';
-import RoutingPath from '../../../routes/RoutingPath';
-import UserAPIService from '../../../shared/api/service/UserAPIService';
-import LocalStorage from '../../../shared/cache/LocalStorage'
-import { LoginCredentials } from '../../../shared/types/AuthenticationProps'
+/** @format */
 
+import { useContext, useState } from "react";
+import { UserContext } from "../../../shared/provider/UserProvider";
+import { useHistory } from "react-router-dom";
+import RoutingPath from "../../../routes/RoutingPath";
+import UserAPIService from "../../../shared/api/service/UserAPIService";
+import LocalStorage from "../../../shared/cache/LocalStorage";
+import { LoginCredentials } from "../../../shared/types/AuthenticationProps";
+import {
+  SignInViewWrapper,
+  SignInViewForm,
+  RegisterForgotPasswordWrapper,
+  Register,
+  ForgotPassword,
+} from "./StyledSignIn.styles";
 
 export const SignInView = (): JSX.Element => {
-	const initalState: LoginCredentials = { username: "", password: "" }
-	const [userCredentials, setUserCredentials] = useState<LoginCredentials>(initalState);
-	const [, setAuthenticatedUser] = useContext(UserContext);
-	const history = useHistory();
+  const [, setAuthenticatedUser] = useContext(UserContext);
+  const [userCredentials, setUserCredentials] = useState<LoginCredentials>({
+    username: "",
+    password: "",
+  });
+  const history = useHistory();
 
-	const handleUserCredentials = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
-		setUserCredentials({
-			...userCredentials,
-			[event.target.name]: value,
-		});
-	};
+  const handleUserCredentials = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    target: keyof LoginCredentials
+  ) => {
+    setUserCredentials({
+      ...userCredentials,
+      [target]: event.target.value,
+    });
+  };
 
-	const signIn = async () => {
-		const { data } = await UserAPIService.loginUser(userCredentials)
-		localStorage.setItem(LocalStorage.authenticationToken, data.token)
+  const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { data } = await UserAPIService.loginUser(userCredentials);
+    localStorage.setItem(LocalStorage.authenticationToken, data.token);
 
-		setAuthenticatedUser({
-			id: data.id,
-			username: data.username,
-			token: data.token,
-			authenticated: true,
-		})
-		history.push(RoutingPath.homeView);
-	};
+    setAuthenticatedUser({
+      id: data.id,
+      username: data.username,
+      token: data.token,
+      authenticated: true,
+    });
+    history.push(RoutingPath.homeView);
+  };
 
-
-	return (
-		<SignInViewWrapper>
-			<SignInViewInput>
-				<input
-					type="text"
-					autoComplete="username"
-					placeholder="Username"
-					className="input-user"
-					name="username"
-					value={userCredentials.username}
-					onChange={handleUserCredentials}
-				/>
-				<input
-					type="password"
-					autoComplete="current-password"
-					placeholder="Password"
-					className="input-password"
-					name="password"
-					value={userCredentials.password}
-					onChange={handleUserCredentials}
-				/>
-				<button onClick={() => signIn()}>sign in</button>
-			</SignInViewInput>
-			<RegisterForgotPasswordWrapper>
-				<Register onClick={() => history.push(RoutingPath.registerUserView)}>Register</Register>
-				<ForgotPassword>Forgot password?</ForgotPassword>
-			</RegisterForgotPasswordWrapper>
-		</SignInViewWrapper>
-	);
+  return (
+    <SignInViewWrapper>
+      <SignInViewForm onSubmit={(event) => signIn(event)}>
+        <input
+          type='text'
+          placeholder='username'
+          onChange={(event) => handleUserCredentials(event, "username")}
+        />
+        <input
+          type='password'
+          autoComplete='current-password'
+          placeholder='password'
+          onChange={(event) => handleUserCredentials(event, "password")}
+        />
+        <input type='submit' value='Sign in' />
+      </SignInViewForm>
+      <RegisterForgotPasswordWrapper>
+        <Register onClick={() => history.push(RoutingPath.registerUserView)}>
+          Register
+        </Register>
+        <ForgotPassword>Forgot password?</ForgotPassword>
+      </RegisterForgotPasswordWrapper>
+    </SignInViewWrapper>
+  );
 };

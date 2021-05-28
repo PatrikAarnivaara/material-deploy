@@ -10,10 +10,11 @@ const defaultValues = {
 	authenticated: false,
 }
 
-export const UserProvider = (props: { children?: React.ReactNode }) => {
+export const UserProvider = (props: { children?: React.ReactChild }) => {
 	const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(defaultValues)
+	const { children } = props
 	console.log(authenticatedUser)
 	return (
-		<UserContext.Provider value={[authenticatedUser, setAuthenticatedUser]}>{props.children}</UserContext.Provider>
+		<UserContext.Provider value={[authenticatedUser, setAuthenticatedUser]}>{children}</UserContext.Provider>
 	);
 };

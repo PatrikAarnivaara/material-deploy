@@ -11,11 +11,11 @@ import Middlewares from './src/middlewares/Middleware.js'
 import passportConfig from './src/configurations/passport-config.js'
 
 const server = express();
-server.use(express.json());
 server.use(passport.initialize())
+server.use(cors({ credentials: true }));
+server.use(express.json());
 server.use(morgan('common'));
 server.use(helmet());
-server.use(cors({ credentials: true }));
 
 /* passportConfig.registerUserini() */
 passportConfig.login()
