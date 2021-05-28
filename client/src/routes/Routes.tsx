@@ -30,32 +30,34 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 		return (tokenExp >= currentTime)
 	}
 	
-	const parseJWT = async () => {
-		const token = localStorage.getItem(LocalStorage.authenticationToken)
-		if (!token) { return }
-		const base64Url = token.split('.')[1]
-		const base64 = base64Url.replace('-', '+').replace('_', '/')
-		const JWT = JSON.parse(window.atob(base64))
-		
-		if (validateToken(JWT.exp)) {
-			const response = await UserAPIService.getUser(JWT.id)
-			setAuthenticatedUser({
-				id: JWT.id,
-				authenticated: true,
-				username: response.data.username,
-			})
-		} else {
-			setAuthenticatedUser({
-				id: undefined,
-				authenticated: false,
-				username: undefined
-			})
-			localStorage.removeItem(LocalStorage.authenticationToken)
-		}
-	}
 	useEffect(() => {
+		const parseJWT = async () => {
+			const token = localStorage.getItem(LocalStorage.authenticationToken)
+			if (!token) { return }
+			const base64Url = token.split('.')[1]
+			const base64 = base64Url.replace('-', '+').replace('_', '/')
+			const JWT = JSON.parse(window.atob(base64))
+			
+			if (validateToken(JWT.exp)) {
+				const response = await UserAPIService.getUser(JWT.id)
+				setAuthenticatedUser({
+					id: JWT.id,
+					authenticated: true,
+					username: response.data.username,
+				})
+
+				console.log('here',response.data.id)
+			} else {
+				setAuthenticatedUser({
+					id: undefined,
+					authenticated: false,
+					username: undefined
+				})
+				localStorage.removeItem(LocalStorage.authenticationToken)
+			}
+		}
 		parseJWT()
-	}, []);
+	}, [setAuthenticatedUser]);
 	
 
 	return (
