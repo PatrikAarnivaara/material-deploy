@@ -3,6 +3,10 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../../shared/provider/UserProvider";
 import { useHistory } from "react-router-dom";
+import RoutingPath from "../../../routes/RoutingPath";
+import UserAPIService from "../../../shared/api/service/UserAPIService";
+import LocalStorage from "../../../shared/cache/LocalStorage";
+import { LoginCredentials } from "../../../shared/types/AuthenticationProps";
 import {
   SignInViewWrapper,
   SignInViewForm,
@@ -10,16 +14,13 @@ import {
   Register,
   ForgotPassword,
 } from "./StyledSignIn.styles";
-import RoutingPath from "../../../routes/RoutingPath";
-import UserAPIService from "../../../shared/api/service/UserAPIService";
-import LocalStorage from "../../../shared/cache/LocalStorage";
-import { LoginCredentials } from "../../../shared/types/AuthenticationProps";
 
 export const SignInView = (): JSX.Element => {
-  const initalState: LoginCredentials = { username: "", password: "" };
-  const [userCredentials, setUserCredentials] =
-    useState<LoginCredentials>(initalState);
   const [, setAuthenticatedUser] = useContext(UserContext);
+  const [userCredentials, setUserCredentials] = useState<LoginCredentials>({
+    username: "",
+    password: "",
+  });
   const history = useHistory();
 
   const handleUserCredentials = (
