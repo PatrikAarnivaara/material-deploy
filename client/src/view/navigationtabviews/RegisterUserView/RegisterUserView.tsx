@@ -28,14 +28,14 @@ export const RegisterUserView = () => {
   const registerUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {
+    /* try {
       const { data } = await UserAPIService.createUser(newUser);
       if (data) {
         setNewUser(initialState);
       }
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const handleChange = (
@@ -57,26 +57,31 @@ export const RegisterUserView = () => {
       <RegisterForm onSubmit={(event) => registerUser(event)}>
         <input
           type='text'
+          required
           placeholder='first name'
           onChange={(event) => handleChange(event, "firstname")}
         />
         <input
           type='text'
+          required
           placeholder='last name'
           onChange={(event) => handleChange(event, "lastname")}
         />
         <input
           type='text'
+          required
           placeholder='school class'
           onChange={(event) => handleChange(event, "schoolclass")}
         />
         <input
           type='text'
+          required
           placeholder='e-mail'
           onChange={(event) => handleChange(event, "email")}
         />
         <input
           type='text'
+          required
           placeholder='username'
           autoComplete='username'
           onChange={(event) => handleChange(event, "username")}
@@ -89,6 +94,7 @@ export const RegisterUserView = () => {
         />
         <input
           type='password'
+          required
           placeholder='password'
           autoComplete='new-password'
           onChange={(event) => handleChange(event, "password")}

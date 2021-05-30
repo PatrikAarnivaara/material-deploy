@@ -48,8 +48,8 @@ const updateEquipment = async (request, response) => {
 const getEquipment = async (request, response) => {
     try {
         const databaseResponse = await EquipmentModel.find().populate('currentlyLoanedByUser')
-        console.log(databaseResponse)
-        response.status(StatusCode.OK).send(databaseResponse)
+/*         console.log(databaseResponse)
+ */        response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
     }

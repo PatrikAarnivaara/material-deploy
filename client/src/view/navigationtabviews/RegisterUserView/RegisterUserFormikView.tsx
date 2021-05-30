@@ -3,20 +3,14 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-type IFormInputs = {
-  firstName: string;
-  lastName: string;
-  schoolClass: string;
-  email: string;
-  username: string;
-  password: string;
-};
+import { RegisterWrapper, RegisterForm } from "./StyledRegisterUserView.styles";
+import UserAPIService from "../../../shared/api/service/UserAPIService";
+import { RegisterFormInputs } from "../../../shared/types/RegisterFormInputs";
 
 const schema = yup.object().shape({
-  firstName: yup.string().max(255).required("First name is required"),
-  lastName: yup.string().max(255).required("Last name is required"),
-  schoolClass: yup
+  firstname: yup.string().max(255).required("First name is required"),
+  lastname: yup.string().max(255).required("Last name is required"),
+  schoolclass: yup
     .string()
     .required("School class is required")
     .matches(/\w{2}\d{2}\w{1}/, "must match ab12c"),
@@ -31,37 +25,64 @@ const schema = yup.object().shape({
     .required(),
 });
 
+function sleep(milliseconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
+
 export const RegisterUserFormikView = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({
-    resolver: yupResolver(schema),
+  } = useForm<RegisterFormInputs>({
+    resolver: yupResolver(schema), 
   });
-  const onSubmit = (data: IFormInputs) => console.log(data);
+
+  console.log(register)
+
+  const onSubmit = async (inputData: RegisterFormInputs) => {
+    await sleep(2000);
+    try {
+      const { data } = await UserAPIService.createUser(inputData);
+      console.log(data)
+      alert(JSON.stringify(data));
+    } catch (error) {
+      alert("There is an error");
+      console.log(error)
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("firstName")} />
-      <p>{errors.firstName?.message}</p>
+    <RegisterWrapper>
+      <RegisterForm onSubmit={handleSubmit(onSubmit)}>
+        <label>First Name</label>
+        <input {...register("firstname")} />
+        <p>{errors.firstname?.message}</p>
 
-      <input {...register("lastName")} />
-      <p>{errors.lastName?.message}</p>
+        <label>Last Name</label>
+        <input {...register("lastname")} />
+        <p>{errors.lastname?.message}</p>
 
-      <input {...register("schoolClass")} />
-      <p>{errors.schoolClass?.message}</p>
+        <label>School Class</label>
+        <input {...register("schoolclass")} />
+        <p>{errors.schoolclass?.message}</p>
 
-      <input {...register("email")} />
-      <p>{errors.email?.message}</p>
+        <label>E-mail</label>
+        <input {...register("email")} />
+        <p>{errors.email?.message}</p>
 
-      <input {...register("username")} />
-      <p>{errors.username?.message}</p>
+        <label>Username</label>
+        <input {...register("username")} />
+        <p>{errors.username?.message}</p>
 
-      <input {...register("password")} type='password' />
-      <p>{errors.password?.message}</p>
+        <label>Password</label>
+        <input {...register("password")} type='password' />
+        <p>{errors.password?.message}</p>
 
-      <input type='submit' />
-    </form>
+        <input type='submit' />
+      </RegisterForm>
+    </RegisterWrapper>
   );
 };
