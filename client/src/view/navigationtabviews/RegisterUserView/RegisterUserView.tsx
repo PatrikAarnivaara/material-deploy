@@ -60,7 +60,7 @@ export const RegisterUserView = () => {
 
   const onSubmit = async (inputData: RegisterFormInputs) => {
     setIsLoading(true);
-    await sleep(2000);
+    /* await sleep(2000); */
     try {
       const { data } = await UserAPIService.createUser(inputData);
       if (data) {

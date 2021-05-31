@@ -29,8 +29,8 @@ Configurations.connectToDatabase();
 
 if (process.env.NODE_ENV === 'production') {
     server.use(express.static("../client/build"));
-    server.get("/*", (req, res) => {
-        res.sendFile("/client/build/index.html");
+    server.get("*", (req, res) => {
+        res.sendFile("../client/build/index.html");
     });
 }
 

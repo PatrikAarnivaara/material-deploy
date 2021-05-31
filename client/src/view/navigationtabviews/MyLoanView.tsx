@@ -35,7 +35,7 @@ export const MyLoanView = () => {
 	return (
 		<MyLoanWrapper>
 			{data?.map((item) => {
-				return <Card key={item.serialnumber} item={item} columns={objectKeys} x={z}/>
+				return <Card key={item.serialnumber} item={item} list={objectKeys} x={z}/>
 			})}
 		</MyLoanWrapper>
 	);

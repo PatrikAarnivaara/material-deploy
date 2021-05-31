@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 type CardProps<Type, Key extends keyof Type> = {
     item: Type;
-    columns: Array<LabelDefinitionType<Type, Key>>
+    list: Array<LabelDefinitionType<Type, Key>>
+    /* Change name of x */
     x: (/* input: string */) => void,
 }
 
@@ -27,11 +28,11 @@ const StyledMyLoanCardButton = styled.button`
     opacity: 0.9;
 `
 
-export const Card = <Type, Key extends keyof Type>({ item, columns, x }: CardProps<Type, Key>): JSX.Element => {
+export const Card = <Type, Key extends keyof Type>({ item, list, x }: CardProps<Type, Key>): JSX.Element => {
     return (
         <StyledMyLoanCardWrapper>
-            {columns?.map((column, index) => {
-                return <StyledMyLoanCardContent key={index}>{item[column.key]}<br /></StyledMyLoanCardContent>
+            {list?.map((listItem, index) => {
+                return <StyledMyLoanCardContent key={index}>{item[listItem.key]}<br /></StyledMyLoanCardContent>
             })}
             <StyledMyLoanCardButton onClick={() => { x() }}>Return Loan</StyledMyLoanCardButton>
         </StyledMyLoanCardWrapper>
