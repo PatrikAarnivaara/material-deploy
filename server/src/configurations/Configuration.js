@@ -35,9 +35,9 @@ const connectToDatabase = async () => {
 
 const buildFrontendInProduction = (server) => {
     if (process.env.NODE_ENV === 'production') {
-        server.use(express.static("../client/build"));
+        server.use(express.static("../../client/build"));
         server.get("*", (req, res) => {
-            res.sendFile("../client/build/index.html");
+            res.sendFile("../../client/build/index.html");
         });
     }
 }
