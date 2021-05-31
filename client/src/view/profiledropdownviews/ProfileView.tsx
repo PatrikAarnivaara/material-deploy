@@ -1,7 +1,6 @@
 /** @format */
 
 import styled from "styled-components";
-import { RegisterUserFormikView } from "../navigationtabviews/RegisterUserView/RegisterUserFormikView";
 
 export const ProfileViewWrapper = styled.div`
   max-width: 1124px;
@@ -12,7 +11,7 @@ export const ProfileViewWrapper = styled.div`
 export const ProfileView = () => {
   return (
     <ProfileViewWrapper>
-      <RegisterUserFormikView />
+      {'User data'}
     </ProfileViewWrapper>
   );
 };
