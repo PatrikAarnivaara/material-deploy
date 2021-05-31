@@ -2,6 +2,10 @@
 
 import styled from "styled-components";
 
+type StyledRegister = {
+  showPassword: boolean
+}
+
 export const RegisterWrapper = styled.div`
   max-width: 1124px;
   margin: auto;
@@ -13,7 +17,8 @@ export const RegisterForm = styled.form`
   display: grid;
   grid-template-columns: auto;
   grid-gap: 0.5em;
-  max-width: 40vw;
+  max-width: 400px;
+  min-width: 200px;
 
   input {
     padding: 10px;
@@ -34,5 +39,27 @@ export const RegisterForm = styled.form`
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+  }
+`;
+
+export const PasswordWrapper = styled.div`
+  position: relative;
+
+  input {
+    margin: 0 auto;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+
+  i {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    color: ${(props) => props.color};
+    
+  }
+
+  i:hover {
+    cursor: pointer;
   }
 `;

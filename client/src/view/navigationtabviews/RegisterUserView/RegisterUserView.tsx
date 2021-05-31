@@ -1,16 +1,21 @@
 /** @format */
 
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../../shared/provider/UserProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { RegisterWrapper, RegisterForm } from "./StyledRegisterUserView.styles";
-import UserAPIService from "../../../shared/api/service/UserAPIService";
 import { RegisterFormInputs } from "../../../shared/types/RegisterFormInputs";
-import RoutingPath from "../../../routes/RoutingPath";
-import { useContext, useState } from "react";
+import UserAPIService from "../../../shared/api/service/UserAPIService";
 import { Spinner } from "../../../components/spinner/Spinner";
+import RoutingPath from "../../../routes/RoutingPath";
+import {
+  RegisterWrapper,
+  RegisterForm,
+  PasswordWrapper,
+} from "./StyledRegisterUserView.styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const schema = yup.object().shape({
   firstname: yup.string().max(255).required("First name is required"),
@@ -30,6 +35,7 @@ const schema = yup.object().shape({
     .required(),
 });
 
+const eye = <FontAwesomeIcon icon={faEye} />;
 const sleep = (milliseconds: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
@@ -38,15 +44,19 @@ const sleep = (milliseconds: number) => {
 
 export const RegisterUserView = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const history = useHistory();
-  /*   const [setAuthenticatedUser] = useContext(UserContext);
-   */ const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputs>({
     resolver: yupResolver(schema),
   });
+
+  const togglePasswordVisiblity = () => {
+    setShowPassword(!showPassword);
+  };
 
   const onSubmit = async (inputData: RegisterFormInputs) => {
     setIsLoading(true);
@@ -55,6 +65,7 @@ export const RegisterUserView = () => {
       const { data } = await UserAPIService.createUser(inputData);
       if (data) {
         setIsLoading(false);
+        alert("User account created");
       }
       /* MODAL */
       history.push(RoutingPath.homeView);
@@ -88,8 +99,14 @@ export const RegisterUserView = () => {
         <p>{errors.username?.message}</p>
 
         <label>Password</label>
-        <input {...register("password")} type='password' />
-        <p>{errors.password?.message}</p>
+        <PasswordWrapper color={showPassword ? "#00fcb6" : ""}>
+          <input
+            {...register("password")}
+            type={showPassword ? "text" : "password"}
+          />
+          <p>{errors.password?.message}</p>
+          <i onClick={togglePasswordVisiblity}>{eye}</i>
+        </PasswordWrapper>
 
         <input type='submit' value='Register' />
       </RegisterForm>
