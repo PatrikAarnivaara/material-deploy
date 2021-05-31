@@ -2,10 +2,6 @@
 
 import styled from "styled-components";
 
-type StyledRegister = {
-  showPassword: boolean;
-};
-
 export const RegisterWrapper = styled.div`
   max-width: 1124px;
   margin: auto;

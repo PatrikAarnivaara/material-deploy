@@ -71,6 +71,7 @@ export const RegisterUserView = () => {
       history.push(RoutingPath.homeView);
     } catch (error) {
       alert("There is an error");
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -98,6 +99,7 @@ export const RegisterUserView = () => {
         <input {...register("username")} />
         <p>{errors.username?.message}</p>
 
+        {/* Make eye a component */}
         <label>Password</label>
         <PasswordWrapper color={showPassword ? "#00fcb6" : ""}>
           <input
