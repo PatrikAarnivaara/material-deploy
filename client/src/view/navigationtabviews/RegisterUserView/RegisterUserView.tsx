@@ -1,7 +1,7 @@
 /** @format */
 
 import { useHistory } from "react-router-dom";
-import { UserContext } from '../../../shared/provider/UserProvider';
+import { UserContext } from "../../../shared/provider/UserProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,7 +9,8 @@ import { RegisterWrapper, RegisterForm } from "./StyledRegisterUserView.styles";
 import UserAPIService from "../../../shared/api/service/UserAPIService";
 import { RegisterFormInputs } from "../../../shared/types/RegisterFormInputs";
 import RoutingPath from "../../../routes/RoutingPath";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { Spinner } from "../../../components/spinner/Spinner";
 
 const schema = yup.object().shape({
   firstname: yup.string().max(255).required("First name is required"),
@@ -36,9 +37,10 @@ const sleep = (milliseconds: number) => {
 };
 
 export const RegisterUserView = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const history = useHistory();
-/*   const [setAuthenticatedUser] = useContext(UserContext);
- */  const {
+  /*   const [setAuthenticatedUser] = useContext(UserContext);
+   */ const {
     register,
     handleSubmit,
     formState: { errors },
@@ -47,11 +49,14 @@ export const RegisterUserView = () => {
   });
 
   const onSubmit = async (inputData: RegisterFormInputs) => {
+    setIsLoading(true);
     await sleep(2000);
     try {
       const { data } = await UserAPIService.createUser(inputData);
-      /* SPINNER */
-      console.log(data);
+      if (data) {
+        setIsLoading(false);
+      }
+      /* MODAL */
       history.push(RoutingPath.homeView);
     } catch (error) {
       alert("There is an error");
@@ -86,8 +91,9 @@ export const RegisterUserView = () => {
         <input {...register("password")} type='password' />
         <p>{errors.password?.message}</p>
 
-        <input type='submit' value='Register'/>
+        <input type='submit' value='Register' />
       </RegisterForm>
+      {isLoading && <Spinner />}
     </RegisterWrapper>
   );
 };
