@@ -40,13 +40,12 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 			
 			if (validateToken(JWT.exp)) {
 				const response = await UserAPIService.getUser(JWT.id)
+				
 				setAuthenticatedUser({
 					id: JWT.id,
 					authenticated: true,
 					username: response.data.username,
 				})
-
-				console.log('here',response.data.id)
 			} else {
 				setAuthenticatedUser({
 					id: undefined,
@@ -67,7 +66,7 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 				<Route exact path={RoutingPath.myLoanView} component={authenticated(MyLoanView)} />
 				<Route exact path={RoutingPath.equipmentView} component={authenticated(EquipmentView)} />
 				<Route exact path={RoutingPath.signInView} component={blockRouteIfUserIsSignedIn(SignInView)} />
-				<Route exact path={RoutingPath.registerUserView} component={RegisterUserView} />
+				<Route exact path={RoutingPath.registerUserView} component={blockRouteIfUserIsSignedIn(RegisterUserView)} />
 				<Route exact path={RoutingPath.profileView} component={authenticated(ProfileView)} />
 				<Route exact path={RoutingPath.itemDetailView} component={authenticated(ItemDetailView)} />
 				<Route exact path={RoutingPath.userAdminView} component={authenticated(UserAdminView)} />

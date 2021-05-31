@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../../shared/provider/UserProvider';
 /* import { AuthenticatedUser } from '../../../shared/types/AuthenticationProps'
- */import RoutingPath from '../../../routes/RoutingPath';
+ */
+import LocalStorage from '../../../shared/cache/LocalStorage'
+import RoutingPath from '../../../routes/RoutingPath';
 import styled from 'styled-components';
 
 const ProfileDropdownWrapper = styled.div`
@@ -81,14 +83,14 @@ export const ProfileDropdown: React.FC<any> = ({ authData }) => {
 	};
 
 	const logout = () => {
-		localStorage.removeItem('token')
+		localStorage.removeItem(LocalStorage.authenticationToken)
 		setAuthenticatedUser(false)
 		history.push(RoutingPath.homeView)
 	};
 
 	return (
 		<ProfileDropdownWrapper ref={node}>
-			<Image onClick={showMenu} src={'https://thispersondoesnotexist.com/image'} alt={'anonymous person'} />
+			<Image onClick={showMenu} src={'https://thispersondoesnotexist.com/image'} alt={'AI face'} />
 			{show ? (
 				<ProfileDropdownContent>
 					<span>{authData.username}</span>
