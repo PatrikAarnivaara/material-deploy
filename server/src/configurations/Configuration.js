@@ -6,15 +6,15 @@ const { DEV_DATABASE_URL,
     PROD_DATABASE_URL, PORT,
     ENVIRONMENT } = process.env
 
-    const connectToPort = async (server) => {
-        try {
-            await server.listen(PORT, () => {
-                console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT}`)
-            })
-        } catch (error) {
-            console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
-        }
+const connectToPort = async (server) => {
+    try {
+        await server.listen(PORT, () => {
+            console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT}`)
+        })
+    } catch (error) {
+        console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
     }
+}
 
 const connectToDatabase = async () => {
     const DATABASE_URL = ENVIRONMENT === 'DEVELOPMENT' ? DEV_DATABASE_URL : PROD_DATABASE_URL
@@ -33,7 +33,14 @@ const connectToDatabase = async () => {
     }
 }
 
+const buildFrontendInProduction = (server) => {
+	if (process.env.ENVIROMENT === "PRODUCTION") {
+		server.use(express.static('../client/build'))
+	}
+}
+
 export default {
     connectToPort,
-    connectToDatabase
+    connectToDatabase,
+    buildFrontendInProduction
 }
