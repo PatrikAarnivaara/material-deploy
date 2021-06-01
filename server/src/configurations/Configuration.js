@@ -33,18 +33,6 @@ const connectToDatabase = async () => {
     }
 }
 
-<<<<<<< HEAD
-const buildFrontendInProduction = (server) => {
-    if (process.env.NODE_ENV === 'production') {
-        server.use(express.static("../client/build"));
-        server.get("*", (req, res) => {
-            res.sendFile("../client/build/index.html");
-        });
-    }
-}
-
-=======
->>>>>>> parent of bd7581a... moved express static to configs
 export default {
     connectToPort,
     connectToDatabase
