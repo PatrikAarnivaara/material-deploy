@@ -34,6 +34,7 @@ export const RegisterForm = styled.form`
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    margin-bottom: 20px;
   }
 `;
 
