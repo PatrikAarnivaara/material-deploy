@@ -13,7 +13,6 @@ const getUsers = () => {
 };
 
 const createUser = (userdata?: RegisterFormInputs) => {
-	console.log(userdata)
   return http.post("/user", userdata);
 };
 /* TODO: add specific route etc to edit password and username */

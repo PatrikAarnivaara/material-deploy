@@ -47,8 +47,6 @@ const updateEquipment = () => {
         category: randomString
     }
 
-    console.log(mockData)
-
     test('Create(PUT) method for equipment entity', done => {
         Chai.request(server)
             .put('/equipment/60a22f288093f7ab779b0839')
