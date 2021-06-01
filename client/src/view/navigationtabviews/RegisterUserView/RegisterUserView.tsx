@@ -116,7 +116,7 @@ export const RegisterUserView = () => {
 
         <input type='submit' value='Register' />
       </RegisterForm>
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner left={50} top={50}/>}
     </RegisterWrapper>
   );
 };

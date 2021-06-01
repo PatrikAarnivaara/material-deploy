@@ -2,15 +2,20 @@
 
 import styled from "styled-components";
 
-const StyledSpinner = styled.svg`
+type StyledSpinnerProps = {
+  left: number;
+  top: number;
+};
+
+const StyledSpinner = styled.svg<StyledSpinnerProps>`
   animation: rotate 2s linear infinite;
   margin: -25px 0 0 -25px;
   width: 50px;
   height: 50px;
   z-index: 1;
-  position: fixed;
-  left: 50%;
-  top: 50%;
+  position: absolute;
+  left: ${(props) => props.left}%;
+  top: ${(props) => props.top}%;
 
   & .path {
     stroke: #5652bf;
@@ -39,8 +44,8 @@ const StyledSpinner = styled.svg`
   }
 `;
 
-export const Spinner = () => (
-  <StyledSpinner viewBox='0 0 50 50'>
+export const Spinner = (props: { left: number; top: number }) => (
+  <StyledSpinner viewBox='0 0 50 50' left={props.left} top={props.top}>
     <circle
       className='path'
       cx='25'

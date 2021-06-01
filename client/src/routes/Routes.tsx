@@ -25,7 +25,7 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 		return authenticatedUser.authenticated ? navigateToViewIfAuthenticated : SignInView
 	};
 
-	const validateToken = (tokenExp: number) => {
+	/* const validateToken = (tokenExp: number) => {
 		const currentTime = Math.floor(Date.now() / 1000)
 		return (tokenExp >= currentTime)
 	}
@@ -39,8 +39,9 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 			const JWT = JSON.parse(window.atob(base64))
 			
 			if (validateToken(JWT.exp)) {
-				const response = await UserAPIService.getUser(JWT.id)
 				
+				const response = await UserAPIService.getUser(JWT.id)
+				console.log(response.data)
 				setAuthenticatedUser({
 					id: JWT.id,
 					authenticated: true,
@@ -57,7 +58,7 @@ export const Routes = (props: { children?: React.ReactChild }) => {
 		}
 		parseJWT()
 	}, [setAuthenticatedUser]);
-	
+	 */
 
 	return (
 		<BrowserRouter>
