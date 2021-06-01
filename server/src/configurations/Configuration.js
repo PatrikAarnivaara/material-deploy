@@ -35,33 +35,12 @@ const connectToDatabase = async () => {
 
 <<<<<<< HEAD
 const buildFrontendInProduction = (server) => {
-<<<<<<< Updated upstream
-	if (process.env.ENVIROMENT === "PRODUCTION") {
-		server.use(express.static('../client/build'))
-	}
-=======
-<<<<<<< Updated upstream
     if (process.env.NODE_ENV === 'production') {
         server.use(express.static("../client/build"));
         server.get("*", (req, res) => {
             res.sendFile("../client/build/index.html");
         });
     }
-=======
-<<<<<<< HEAD
-	if (process.env.ENVIROMENT === "PRODUCTION") {
-		server.use(express.static('../client/build'))
-	}
-=======
-    if (process.env.NODE_ENV === 'production') {
-        server.use(express.static("../../client/build"));
-        server.get("*", (req, res) => {
-            res.sendFile("../../client/build/index.html");
-        });
-    }
->>>>>>> parent of 83d074d... edited path
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }
 
 =======
