@@ -6,15 +6,15 @@ const { DEV_DATABASE_URL,
     PROD_DATABASE_URL, PORT,
     ENVIRONMENT } = process.env
 
-const connectToPort = async (server) => {
-    try {
-        await server.listen(PORT, () => {
-            console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT}`)
-        })
-    } catch (error) {
-        console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
+    const connectToPort = async (server) => {
+        try {
+            await server.listen(PORT, () => {
+                console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT}`)
+            })
+        } catch (error) {
+            console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
+        }
     }
-}
 
 const connectToDatabase = async () => {
     const DATABASE_URL = ENVIRONMENT === 'DEVELOPMENT' ? DEV_DATABASE_URL : PROD_DATABASE_URL
@@ -33,6 +33,7 @@ const connectToDatabase = async () => {
     }
 }
 
+<<<<<<< HEAD
 const buildFrontendInProduction = (server) => {
 <<<<<<< Updated upstream
 	if (process.env.ENVIROMENT === "PRODUCTION") {
@@ -63,8 +64,9 @@ const buildFrontendInProduction = (server) => {
 >>>>>>> Stashed changes
 }
 
+=======
+>>>>>>> parent of bd7581a... moved express static to configs
 export default {
     connectToPort,
-    connectToDatabase,
-    buildFrontendInProduction
+    connectToDatabase
 }
