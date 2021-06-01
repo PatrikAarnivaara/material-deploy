@@ -9,7 +9,6 @@ import LocalStorage from "../../../shared/cache/LocalStorage";
 import { StyledDesktop } from "./StyledDesktop.styles";
 import { Profile } from "../../profile/Profile";
 import UserAPIService from "../../../shared/api/service/UserAPIService";
-import { PulsatingCircle } from "../../spinner/PulsatingCircle";
 
 export const Desktop = () => {
   const [authenticatedUser, setAuthenticatedUser] = useContext(UserContext);
@@ -27,7 +26,7 @@ export const Desktop = () => {
         </span>
       );
     } else {
-      return <PulsatingCircle/>;
+      return <p>Loading</p>;
     }
   };
 
@@ -48,7 +47,7 @@ export const Desktop = () => {
 
       if (validateToken(JWT.exp)) {
         const response = await UserAPIService.getUser(JWT.id);
-        console.log(response.data);
+
         setAuthenticatedUser({
           id: JWT.id,
           authenticated: true,
