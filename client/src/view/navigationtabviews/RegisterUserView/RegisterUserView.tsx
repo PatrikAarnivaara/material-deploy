@@ -22,8 +22,8 @@ const schema = yup.object().shape({
   lastname: yup.string().max(255).required("Last name is required"),
   schoolclass: yup
     .string()
-    .required("School class is required")
-    .matches(/\w{2}\d{2}\w{1}/, "must match ab12c"),
+    .matches(/\w{2}\d{2}\w{1}/, "must match ab12c")
+    .required("School class is required"),
   email: yup.string().email().required("E-mail is required"),
   username: yup
     .string()
@@ -31,16 +31,20 @@ const schema = yup.object().shape({
     .required(),
   password: yup
     .string()
-    .min(5, "Password is required, min 5 characters")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+      "Password must contain at least 6 characters, including UPPER/lowercase and numbers and one special case character(@$!%*#?&)"
+    )
     .required(),
 });
 
 const eye = <FontAwesomeIcon icon={faEye} />;
-const sleep = (milliseconds: number) => {
+
+/* const sleep = (milliseconds: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
   });
-};
+}; */
 
 export const RegisterUserView = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

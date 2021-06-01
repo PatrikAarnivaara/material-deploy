@@ -38,22 +38,33 @@ export const RegisterForm = styled.form`
 `;
 
 export const PasswordWrapper = styled.div`
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  input,
+  i {
+    grid-row: 1/2;
+  }
 
   input {
-    margin: 0 auto;
-    margin-bottom: 14px;
+    grid-column: 1/6;
     width: 100%;
   }
 
   i {
-    position: absolute;
-    top: 20%;
-    right: 10%;
+    grid-column: 5 / -1;
+    align-self: center;
+    justify-self: right;
+    z-index: 2;
+    margin-right: 1em;
     color: ${(props) => props.color};
   }
 
   i:hover {
     cursor: pointer;
+  }
+
+  p {
+    grid-column: 1/6;
   }
 `;
