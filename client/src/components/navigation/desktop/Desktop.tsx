@@ -6,9 +6,9 @@ import { UserContext } from "../../../shared/provider/UserProvider";
 import logotype from "../../../shared/images/logotype.svg";
 import RoutingPath from "../../../routes/RoutingPath";
 import LocalStorage from "../../../shared/cache/LocalStorage";
-import { StyledDesktop } from "./StyledDesktop.styles";
 import { Profile } from "../../profile/Profile";
 import UserAPIService from "../../../shared/api/service/UserAPIService";
+import { StyledDesktop } from "./StyledDesktop.styles";
 
 export const Desktop = () => {
   const [authenticatedUser, setAuthenticatedUser] = useContext(UserContext);

@@ -24,7 +24,9 @@ const userSchema = Schema({
     },
     password: {
         type: String, required: true,
-        minlength: [5, 'password must be longer than 5 characters']
+        minlength: [5, 'password must be longer than 6 characters'],
+        resetPasswordToken: String,
+        resetPasswordExpires: Date,
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,

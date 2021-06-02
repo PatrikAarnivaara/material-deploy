@@ -7,7 +7,7 @@ import { MyLoanView } from "../view/navigationtabviews/MyLoanView";
 import { EquipmentView } from "../view/navigationtabviews/EquipmentView";
 import { EquipmentAdminView } from "../view/profiledropdownviews/EquipmentAdminView";
 import { SignInView } from "../view/navigationtabviews/SignInView/SignInView";
-import { RegisterUserView } from "../view/navigationtabviews/RegisterUserView/RegisterUserView";
+import { RegisterUserView } from "../view/registeruserview/RegisterUserView";
 import { HomeView } from "../view/navigationtabviews/HomeView";
 import { ProfileView } from "../view/profiledropdownviews/ProfileView";
 import { ItemDetailView } from "../view/navigationtabviews/ItemDetailView";
