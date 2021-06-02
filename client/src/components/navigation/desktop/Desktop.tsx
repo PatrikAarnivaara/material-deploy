@@ -12,7 +12,7 @@ import UserAPIService from "../../../shared/api/service/UserAPIService";
 
 export const Desktop = () => {
   const [authenticatedUser, setAuthenticatedUser] = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const history = useHistory();
   const { authenticated } = authenticatedUser;
 
@@ -60,7 +60,7 @@ export const Desktop = () => {
           authenticated: false,
           username: undefined,
         });
-        setIsLoading(false);
+        setIsLoading(true);
         localStorage.removeItem(LocalStorage.authenticationToken);
       }
     };

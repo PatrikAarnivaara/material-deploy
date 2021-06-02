@@ -13,6 +13,7 @@ import {
   RegisterForgotPasswordWrapper,
   Register,
   ForgotPassword,
+  WrongPasswordOrUsernameErrorMessage,
 } from "./StyledSignIn.styles";
 
 export const SignInView = (): JSX.Element => {
@@ -21,6 +22,7 @@ export const SignInView = (): JSX.Element => {
     username: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState<boolean>(false);
   const history = useHistory();
 
   const handleUserCredentials = (
@@ -34,22 +36,31 @@ export const SignInView = (): JSX.Element => {
   };
 
   const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { data } = await UserAPIService.loginUser(userCredentials);
-    localStorage.setItem(LocalStorage.authenticationToken, data.token);
+    try {
+      event.preventDefault();
+      const { data } = await UserAPIService.loginUser(userCredentials);
 
-    setAuthenticatedUser({
-      id: data.id,
-      username: data.username,
-      token: data.token,
-      authenticated: true,
-    });
-    history.push(RoutingPath.homeView);
+      localStorage.setItem(LocalStorage.authenticationToken, data.token);
+      setErrorMessage(false);
+
+      setAuthenticatedUser({
+        id: data.id,
+        username: data.username,
+        token: data.token,
+        authenticated: true,
+      });
+
+      history.push(RoutingPath.homeView);
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(true);
+    }
   };
 
   return (
     <SignInViewWrapper>
       <SignInViewForm onSubmit={(event) => signIn(event)}>
+        <label>sign in</label>
         <input
           type='text'
           placeholder='username'
@@ -61,6 +72,11 @@ export const SignInView = (): JSX.Element => {
           placeholder='password'
           onChange={(event) => handleUserCredentials(event, "password")}
         />
+        {errorMessage && (
+          <WrongPasswordOrUsernameErrorMessage>
+            Wrong username or password
+          </WrongPasswordOrUsernameErrorMessage>
+        )}
         <input type='submit' value='Sign in' />
       </SignInViewForm>
       <RegisterForgotPasswordWrapper>

@@ -1,6 +1,7 @@
 /** @format */
 
 import styled from "styled-components";
+import { ResetPasswordView } from "../ResetPasswordView";
 
 export const ProfileViewWrapper = styled.div`
   max-width: 1124px;
@@ -11,7 +12,7 @@ export const ProfileViewWrapper = styled.div`
 export const ProfileView = () => {
   return (
     <ProfileViewWrapper>
-      {'User data'}
+      <ResetPasswordView/>
     </ProfileViewWrapper>
   );
 };

@@ -1,25 +1,25 @@
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import bcrypt from 'bcrypt'
-
+import crypto from 'crypto'
 import UserModel from '../models/User.model.js';
 import StatusCode from '../configurations/StatusCode.js'
 
 /* TODO: remove error logs */
 
 const testingAuthenticatedRoute = async (request, response) => {
-	jwt.verify(request.token, 'jwtSecret.secret', (error, authorizedData) => {
-		if (error) {
-			//If error send Forbidden (403)
-			response.status(StatusCode.FORBIDDEN).send({ message: `error: ${error}` })
-		} else {
-			//If token is successfully verified, we can send the autorized data 
-			response.json({
-				message: 'Successful log in',
-				authorizedData
-			})
-		}
-	})
+    jwt.verify(request.token, 'jwtSecret.secret', (error, authorizedData) => {
+        if (error) {
+            //If error send Forbidden (403)
+            response.status(StatusCode.FORBIDDEN).send({ message: `error: ${error}` })
+        } else {
+            //If token is successfully verified, we can send the autorized data 
+            response.json({
+                message: 'Successful log in',
+                authorizedData
+            })
+        }
+    })
 }
 
 const createUser = async (request, response) => {
@@ -43,7 +43,7 @@ const createUser = async (request, response) => {
     }
 }
 
-const getUser = async (request, response) => {    
+const getUser = async (request, response) => {
     try {
         const databaseResponse = await UserModel.findById({ _id: request.params.userId })/* .populate('loans') */
         response.status(StatusCode.OK).send(databaseResponse)
@@ -55,7 +55,7 @@ const getUser = async (request, response) => {
 const getUsers = async (request, response) => {
     try {
         const databaseResponse = await UserModel.find()
-        
+
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
@@ -131,6 +131,90 @@ const deleteUser = async (request, response) => {
     }
 }
 
+const updatePassword = (request, response) => {
+    const BCRYPT_SALT_ROUNDS = 12
+    passport.authenticate('jwt', { session: false }, (error, user, info) => {
+        if (error) { console.error(error) }
+        if (info !== undefined) {
+            console.error(info.message)
+            response.status(403).send(info.message)
+        } else {
+            UserModel.findOne({
+                username: request.body.username,
+            }).then((userInfo) => {
+                if (userInfo != null) {
+                    console.log('user found in db')
+                    bcrypt
+                        .hash(request.body.password, BCRYPT_SALT_ROUNDS)
+                        .then((hashedPassword) => {
+                            userInfo.update({
+                                password: hashedPassword,
+                            })
+                        })
+                        .then(() => {
+                            console.log('password updated')
+                            response
+                                .status(200)
+                                .send({ auth: true, message: 'password updated' })
+                        })
+                } else {
+                    console.error('no user exists in db to update')
+                    response.status(404).json('no user exists in db to update')
+                }
+            })
+        }
+    })(request, response, next)
+}
+
+const forgotPassword = async (request, response) => {
+    if (request.body.email === '') {
+        response.status(StatusCode.BAD_REQUEST).send('email required')
+    }
+    console.error(request.body.email)
+    const databaseResponse = await UserModel.findOne({ email: request.body.email })
+    if (databaseResponse === null) {
+        response.status(StatusCode.FORBIDDEN).send('email not in db')
+    } else {
+        const token = crypto.randomBytes(20).toString('hex')
+        await UserModel.findByIdAndUpdate(databaseResponse._id, {
+            resetPasswordToken: token,
+            resetPasswordExpires: Date.now() + 3600000,
+        })
+        Configurations.sendEmail(databaseResponse, token)
+    }
+}
+
+const resetPassword = async (request, response) => {
+    try {
+        const databaseResponse = await UserModel.findOne({ resetPasswordToken: request.body.resetPasswordToken })
+        if (Date.now() >= databaseResponse.resetPasswordExpires) {
+            response.status(StatusCode.FORBIDDEN).send('password reset link is invalid or has expired')
+        }
+        if (databaseResponse == null) {
+            response.status(StatusCode.FORBIDDEN).send('password reset link is invalid or has expired')
+        } else {
+            //TODO: Authenticate and allow password change.
+
+            const BCRYPT_SALT_ROUNDS = 12
+            const hashedPassword = await bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
+            await databaseResponse.update({
+                password: hashedPassword,
+                resetPasswordToken: `Password was reset at: ${Date.now()}`
+            })
+            response.status(StatusCode.OK).send({
+                username: databaseResponse.username,
+                password: hashedPassword,
+                message: 'Sucessfully updated password'
+            })
+        }
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
+            message: 'Error occured while trying to reset password',
+            error: error.message
+        })
+    }
+}
+
 export default {
     createUser,
     getUsers,
@@ -139,5 +223,8 @@ export default {
     loginUser,
     queryUser,
     deleteUser,
-    testingAuthenticatedRoute
+    testingAuthenticatedRoute,
+    updatePassword,
+    forgotPassword,
+    resetPassword,
 }

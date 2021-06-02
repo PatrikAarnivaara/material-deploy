@@ -1,8 +1,10 @@
 /** @format */
 
+import http from "../UserAPI";
 import { RegisterFormInputs } from "../../types/RegisterFormInputs";
 import { LoginCredentials } from "../../types/AuthenticationProps";
-import http from "../UserAPI";
+import { NewPasswordWithEmailToken } from "../../types/AuthenticationProps";
+import { Email } from "../../types/AuthenticationProps";
 
 const getUser = (userId: string) => {
   return http.get(`/user/${userId}`);
@@ -47,6 +49,14 @@ const loginUser = (credentials: LoginCredentials) => {
   return http.post("/user/login", credentials);
 };
 
+const forgotPassword = (email: Email) => {
+  return http.post("/forgotpassword", email);
+};
+
+const resetPassword = (newPasswordAndToken: NewPasswordWithEmailToken) => {
+  return http.put("/resetpassword", newPasswordAndToken);
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getUsers,
@@ -55,4 +65,6 @@ export default {
   deleteUser,
   createUser,
   loginUser,
+  forgotPassword,
+  resetPassword,
 };

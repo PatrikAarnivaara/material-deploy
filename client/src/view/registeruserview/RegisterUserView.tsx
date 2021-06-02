@@ -5,10 +5,10 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { RegisterFormInputs } from "../../../shared/types/RegisterFormInputs";
-import UserAPIService from "../../../shared/api/service/UserAPIService";
-import { Spinner } from "../../../components/spinner/Spinner";
-import RoutingPath from "../../../routes/RoutingPath";
+import { RegisterFormInputs } from "../../shared/types/RegisterFormInputs";
+import UserAPIService from "../../shared/api/service/UserAPIService";
+import { Spinner } from "../../components/spinner/Spinner";
+import RoutingPath from "../../routes/RoutingPath";
 import {
   RegisterWrapper,
   RegisterForm,
@@ -40,12 +40,6 @@ const schema = yup.object().shape({
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 
-/* const sleep = (milliseconds: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, milliseconds);
-  });
-}; */
-
 export const RegisterUserView = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -64,7 +58,7 @@ export const RegisterUserView = () => {
 
   const onSubmit = async (inputData: RegisterFormInputs) => {
     setIsLoading(true);
-    /* await sleep(2000); */
+    
     try {
       const { data } = await UserAPIService.createUser(inputData);
       if (data) {
