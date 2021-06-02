@@ -6,13 +6,13 @@ import { UserContext } from "../../../shared/provider/UserProvider";
 import logotype from "../../../shared/images/logotype.svg";
 import RoutingPath from "../../../routes/RoutingPath";
 import LocalStorage from "../../../shared/cache/LocalStorage";
-import { StyledDesktop } from "./StyledDesktop.styles";
 import { Profile } from "../../profile/Profile";
 import UserAPIService from "../../../shared/api/service/UserAPIService";
+import { StyledDesktop } from "./StyledDesktop.styles";
 
 export const Desktop = () => {
   const [authenticatedUser, setAuthenticatedUser] = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const history = useHistory();
   const { authenticated } = authenticatedUser;
 
@@ -60,7 +60,7 @@ export const Desktop = () => {
           authenticated: false,
           username: undefined,
         });
-        setIsLoading(true);
+        setIsLoading(false);
         localStorage.removeItem(LocalStorage.authenticationToken);
       }
     };
